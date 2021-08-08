@@ -1,5 +1,7 @@
 package com.engine.closeby.closeby.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity(name = "profession")
@@ -14,7 +16,9 @@ public class Profession {
     private float ratePerHour;
     private float ratePerDay;
 
-    @OneToOne(mappedBy = "profession")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="professional_id",nullable = false)
+    @JsonBackReference(value = "professional_profession_ref")
     private Professional professional;
 
     public Professional getProfessional() {

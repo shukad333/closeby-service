@@ -1,6 +1,10 @@
 package com.engine.closeby.closeby.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "professional")
 public class Professional {
@@ -9,9 +13,8 @@ public class Professional {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="profession_id")
-    private Profession profession;
+    @OneToMany(mappedBy = "professional",cascade = CascadeType.PERSIST)
+    private List<Profession> professions = new ArrayList<>();
     private String image;
     private int rating;
 
@@ -23,12 +26,14 @@ public class Professional {
         this.name = name;
     }
 
-    public Profession getProfession() {
-        return profession;
+    public List<Profession> getProfessions() {
+        return professions;
     }
 
-    public void setProfession(Profession profession) {
-        this.profession = profession;
+    public void setProfessions(List<Profession> professions) {
+        this.professions = professions;
+        for(Profession p : professions)
+            p.setProfessional(this);
     }
 
     public String getImage() {
