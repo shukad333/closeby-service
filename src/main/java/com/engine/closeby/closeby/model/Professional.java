@@ -51,4 +51,12 @@ public class Professional {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
